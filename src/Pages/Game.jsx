@@ -113,8 +113,12 @@ const GamePage = () => {
       ) : (
         ""
       )}
-      {gameData ? <QuoteDisplay text={gameData.quote_display} /> : ""}
-      {gameData
+      {gameData && !gameState ? (
+        <QuoteDisplay text={gameData.quote_display} />
+      ) : (
+        ""
+      )}
+      {gameData && !gameState
         ? gameData.quotes.map((quote) => {
             return (
               <div style={quotesContainer}>
