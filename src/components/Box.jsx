@@ -2,9 +2,9 @@ const Box = () => {
   const boxStyle = {
     height: "60px",
     width: "60px",
-    backgroundColor: "black",
+    backgroundColor: "#2e2e2e",
     borderRadius: "8px",
-    border: "3px solid white",
+    border: "2px solid white",
   };
 
   return (
