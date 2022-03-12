@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 const StrikeCounter = () => {
   const boxStyle = {
     height: "200px",
@@ -6,7 +8,7 @@ const StrikeCounter = () => {
     borderRadius: "50%",
     display: "flex",
     justifyContent: "center",
-      alignItems: "center",
+    alignItems: "center",
     flexDirection: "column"
   };
 
@@ -15,15 +17,15 @@ const StrikeCounter = () => {
     fontSize: "40px",
     margin: "0",
     lineHeight: "60px",
-    height: "50px",
+    height: "50px"
   };
 
   return (
     <>
-      <div style={boxStyle}>
+      <motion.div style={boxStyle}>
         <p style={xStyle}>Streak</p>
         <p style={xStyle}>2</p>
-      </div>
+      </motion.div>
     </>
   );
 };
