@@ -1,7 +1,7 @@
-const StrikeCounter = ({ streak }) => {
+const StreakCounter = ({ streak, inc }) => {
   const boxStyle = {
-    height: "150px",
-    width: "150px",
+    height: "120px",
+    width: "120px",
     background: "linear-gradient(180deg, #8241F9 0%, #4E277B 100%)",
     borderRadius: "50%",
     display: "flex",
@@ -14,13 +14,11 @@ const StrikeCounter = ({ streak }) => {
     color: "white",
     fontSize: "32px",
     margin: "0",
-    lineHeight: "60px",
-    height: "50px",
   };
 
   return (
     <>
-      <div style={boxStyle}>
+      <div style={boxStyle} onClick={inc}>
         <p style={xStyle}>Streak</p>
         <p style={xStyle}>{streak}</p>
       </div>
@@ -28,4 +26,4 @@ const StrikeCounter = ({ streak }) => {
   );
 };
 
-export default StrikeCounter;
+export default StreakCounter;

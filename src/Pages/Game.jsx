@@ -1,31 +1,46 @@
-import Box from "../components/Box";
 import BoxStrike from "../components/BoxStrike";
 import Button from "../components/Button";
-import StrikeCounter from "../components/StrikeCounter";
+import StreakCounter from "../components/StreakCounter";
 import QuoteButton from "../components/QuoteButton";
+import QuoteDisplay from "../components/QuoteDisplay";
 import { useState, useEffect } from "react";
 
 const GamePage = () => {
   const [strikes, setStrikes] = useState(0);
   const [streak, setStreak] = useState(0);
+  const [gameData, setGameData] = useState(null);
 
   // game loop
-  useEffect(async () => {
+  useEffect(() => {
     // fetch
-    const gameData = await getGameData();
-    console.log(gameData);
+    if (!gameData) {
+      getGameData().then((gameData) => setGameData(gameData));
+    }
 
-    if (strikes === 3) {
+    if (strikes === 4) {
       newGame();
     }
-  }, [strikes]);
+  }, [strikes, gameData]);
 
   function newGame() {
+    setGameData(false);
     setStreak(0);
     setStrikes(0);
   }
 
-  async function getGameData() {}
+  function incrementStreak() {
+    setStreak(streak + 1);
+  }
+
+  async function getGameData() {
+    const url = "http://localhost:8000/api/newgame/4";
+    try {
+      const gameReq = await fetch(url);
+      return await gameReq.json();
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const container = {
     display: "flex",
@@ -44,15 +59,13 @@ const GamePage = () => {
   return (
     <>
       <div style={container}>
-        <StrikeCounter streak={streak} />
+        <StreakCounter streak={streak} inc={incrementStreak} />
         <div style={strikeContainer}>
-          <BoxStrike />
-          <Box />
-          <Box />
+          <BoxStrike strikes={strikes} />
         </div>
-        <Button />
-        {/* <QuoteButton /> */}
+        <Button newGame={newGame} />
       </div>
+      {gameData ? <QuoteDisplay text={gameData.quote_display} /> : ""}
     </>
   );
 };
