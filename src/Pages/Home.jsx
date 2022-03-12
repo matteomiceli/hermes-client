@@ -1,22 +1,21 @@
 import StartMan from "../assets/StartMan.png";
 
 const buttonStyle = {
-  position: "absolute",
-  top: "300px",
-  right: "50%",
-  let: "50%",
-  margin: "100",
   height: "140px",
   width: "250px",
+};
+
+const divStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "90vh",
 };
 
 const HomePage = () => {
   return (
     <>
-      <h1>Home</h1>
-      {/* <a href="game">Play</a> */}
-
-      <div>
+      <div style={divStyle}>
         <a href="game">
           <img src={StartMan} style={buttonStyle} />
         </a>
