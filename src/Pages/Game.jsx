@@ -1,15 +1,90 @@
-import Box from "../components/Box";
 import BoxStrike from "../components/BoxStrike";
-import Button from "../components/Button.js";
-import StrikeCounter from "../components/StrikeCounter";
+import Button from "../components/Button";
+import StreakCounter from "../components/StreakCounter";
 import QuoteButton from "../components/QuoteButton";
+import QuoteDisplay from "../components/QuoteDisplay";
+import { useState, useEffect } from "react";
 
 const GamePage = () => {
+  const [strikes, setStrikes] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [gameData, setGameData] = useState(null);
+  const [gameState, setGameState] = useState(null);
+
+  // game loop
+  useEffect(() => {
+    console.log("here");
+    if (!gameData) {
+      if (gameState === "congrats") {
+        setTimeout(() => {
+          setGameState(null);
+        }, 1000);
+      }
+      getNewGameData().then((gameData) =>
+        setGameData(gameData).catch((e) => console.error(e))
+      );
+    }
+  }, [gameData]);
+
+  useEffect(() => {
+    if (strikes === 4) {
+      setTimeout(() => {
+        setGameState(null);
+      }, 2000);
+      setGameState("oof");
+      newGame();
+    }
+  }, [strikes]);
+
+  useEffect(() => {
+    if (gameState === "congrats") {
+      setGameData(null);
+    }
+  }, [streak, gameState]);
+
+  function newGame() {
+    setStreak(0);
+    setStrikes(0);
+    setGameData(null);
+  }
+
+  function handleFinalAnswer(selected) {
+    if (selected === gameData.answer) {
+      setGameState("congrats");
+      incrementStreak();
+    } else {
+      incrementStrikes();
+    }
+  }
+
+  function incrementStreak() {
+    setStreak(streak + 1);
+  }
+  function incrementStrikes() {
+    setStrikes(strikes + 1);
+  }
+
+  async function getNewGameData() {
+    console.log("called");
+    const url = "http://localhost:8000/api/newgame/4";
+    try {
+      const gameReq = await fetch(url);
+      return await gameReq.json();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const container = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     padding: "20px 60px",
+  };
+
+  const quotesContainer = {
+    display: "flex",
+    justifyContent: "center",
   };
 
   const strikeContainer = {
@@ -18,19 +93,44 @@ const GamePage = () => {
     alignItems: "center",
     flexDirection: "row",
   };
+
   return (
     <>
       <div style={container}>
-        <StrikeCounter />
+        <StreakCounter streak={streak} inc={incrementStreak} />
         <div style={strikeContainer}>
-          <BoxStrike />
-          <Box />
-          <Box />
+          <BoxStrike strikes={strikes} />
         </div>
-        <Button />
+        <Button newGame={newGame} />
       </div>
-          
-          <QuoteButton />
+      {gameState === "congrats" ? (
+        <h1 style={{ color: "white", textAlign: "center" }}>Correct!</h1>
+      ) : (
+        ""
+      )}
+      {gameState === "oof" ? (
+        <h1 style={{ color: "red", textAlign: "center" }}>You lose!</h1>
+      ) : (
+        ""
+      )}
+      {gameData && !gameState ? (
+        <QuoteDisplay text={gameData.quote_display} />
+      ) : (
+        ""
+      )}
+      {gameData && !gameState
+        ? gameData.quotes.map((quote) => {
+            return (
+              <div style={quotesContainer}>
+                <QuoteButton
+                  quote={quote}
+                  handleFinalAnswer={handleFinalAnswer}
+                  key={quote}
+                />
+              </div>
+            );
+          })
+        : ""}
     </>
   );
 };

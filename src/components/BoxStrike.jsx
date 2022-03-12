@@ -1,7 +1,7 @@
-const BoxStrike = () => {
+const BoxStrike = ({ strikes }) => {
   const boxStyle = {
-    height: "60px",
-    width: "60px",
+    height: "50px",
+    width: "50px",
     backgroundColor: "#2e2e2e",
     borderRadius: "8px",
     display: "flex",
@@ -12,7 +12,7 @@ const BoxStrike = () => {
   };
 
   const xStyle = {
-    color: "white",
+    color: "red",
     fontSize: "80px",
     margin: "0",
     lineHeight: "20px",
@@ -21,9 +21,9 @@ const BoxStrike = () => {
 
   return (
     <>
-      <div style={boxStyle}>
-        <p style={xStyle}>x</p>
-      </div>
+      <div style={boxStyle}>{strikes >= 1 ? <p style={xStyle}>x</p> : ""}</div>
+      <div style={boxStyle}>{strikes >= 2 ? <p style={xStyle}>x</p> : ""}</div>
+      <div style={boxStyle}>{strikes >= 3 ? <p style={xStyle}>x</p> : ""}</div>
     </>
   );
 };
