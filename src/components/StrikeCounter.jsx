@@ -12,7 +12,7 @@ const StrikeCounter = () => {
 
   const xStyle = {
     color: "white",
-    fontSize: "50px",
+    fontSize: "40px",
     margin: "0",
     lineHeight: "60px",
     height: "50px",
