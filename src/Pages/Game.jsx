@@ -13,7 +13,6 @@ const GamePage = () => {
 
   // game loop
   useEffect(() => {
-    console.log("here");
     if (!gameData) {
       if (gameState === "congrats") {
         setTimeout(() => {
@@ -65,7 +64,6 @@ const GamePage = () => {
   }
 
   async function getNewGameData() {
-    console.log("called");
     const url = "http://localhost:8000/api/newgame/4";
     try {
       const gameReq = await fetch(url);
@@ -118,19 +116,30 @@ const GamePage = () => {
       ) : (
         ""
       )}
-      {gameData && !gameState
-        ? gameData.quotes.map((quote) => {
-            return (
-              <div style={quotesContainer}>
-                <QuoteButton
-                  quote={quote}
-                  handleFinalAnswer={handleFinalAnswer}
-                  key={quote}
-                />
-              </div>
-            );
-          })
-        : ""}
+      {gameData && !gameState ? (
+        gameData.quotes.map((quote) => {
+          return (
+            <div style={quotesContainer}>
+              <QuoteButton
+                quote={quote}
+                handleFinalAnswer={handleFinalAnswer}
+                key={quote}
+              />
+            </div>
+          );
+        })
+      ) : (
+        <p
+          style={{
+            color: "white",
+            textAlign: "center",
+            fontSize: 24,
+            paddingTop: 200,
+          }}
+        >
+          Loading translation...
+        </p>
+      )}
     </>
   );
 };
