@@ -14,7 +14,9 @@ const GamePage = () => {
   useEffect(() => {
     // fetch
     if (!gameData) {
-      getGameData().then((gameData) => setGameData(gameData));
+      getNewGameData().then((gameData) =>
+        setGameData(gameData).then((e) => console.log(e))
+      );
     }
 
     if (strikes === 4) {
@@ -28,11 +30,13 @@ const GamePage = () => {
     setStrikes(0);
   }
 
+  function handleFinalAnswer(selected) {}
+
   function incrementStreak() {
     setStreak(streak + 1);
   }
 
-  async function getGameData() {
+  async function getNewGameData() {
     const url = "http://localhost:8000/api/newgame/4";
     try {
       const gameReq = await fetch(url);
@@ -47,6 +51,11 @@ const GamePage = () => {
     justifyContent: "space-between",
     alignItems: "center",
     padding: "20px 60px",
+  };
+
+  const quotesContainer = {
+    display: "flex",
+    justifyContent: "center",
   };
 
   const strikeContainer = {
@@ -66,6 +75,18 @@ const GamePage = () => {
         <Button newGame={newGame} />
       </div>
       {gameData ? <QuoteDisplay text={gameData.quote_display} /> : ""}
+      {gameData
+        ? gameData.quotes.map((quote) => {
+            return (
+              <div style={quotesContainer}>
+                <QuoteButton
+                  quote={quote}
+                  handleFinalAnswer={handleFinalAnswer}
+                />
+              </div>
+            );
+          })
+        : ""}
     </>
   );
 };
