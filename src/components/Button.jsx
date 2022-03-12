@@ -6,8 +6,9 @@ const buttonStyle = {
   width: "220px",
   fontSize: "18px",
   borderRadius: "8px",
+  color: "white",
   padding: "5px 10px",
-  border: "1px solid #150A27"
+  border: "1px solid #150A27",
 };
 
 const Button = ({ handleClick }) => (
