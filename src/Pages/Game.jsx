@@ -30,7 +30,7 @@ const GamePage = () => {
     if (strikes === 4) {
       setTimeout(() => {
         setGameState(null);
-      }, 1000);
+      }, 2000);
       setGameState("oof");
       newGame();
     }
