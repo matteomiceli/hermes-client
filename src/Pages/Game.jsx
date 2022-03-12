@@ -4,13 +4,30 @@ import Button from "../components/Button.js";
 import StrikeCounter from "../components/StrikeCounter";
 
 const GamePage = () => {
+  const container = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "20px 60px",
+  };
+
+  const strikeContainer = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
+  };
   return (
     <>
-          <h1>Game</h1>
-          <StrikeCounter />
-          <Box />
+      <div style={container}>
+        <StrikeCounter />
+        <div style={strikeContainer}>
           <BoxStrike />
-         <Button />
+          <Box />
+          <Box />
+        </div>
+        <Button />
+      </div>
     </>
   );
 };

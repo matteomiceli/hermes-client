@@ -2,7 +2,6 @@ import React from "react";
 
 const buttonStyle = {
   background: "linear-gradient(180deg, #8241F9 0%, #4E277B 100%)",
-  position: "absolute",
   height: "50px",
   width: "220px",
   fontSize: "18px",
