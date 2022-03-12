@@ -8,6 +8,7 @@ const BoxStrike = () => {
     justifyContent: "center",
     alignItems: "center",
     border: "2px solid white",
+    margin: "20px",
   };
 
   const xStyle = {
