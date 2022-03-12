@@ -2,6 +2,7 @@ import Box from "../components/Box";
 import BoxStrike from "../components/BoxStrike";
 import Button from "../components/Button.js";
 import StrikeCounter from "../components/StrikeCounter";
+import QuoteButton from "../components/QuoteButton";
 
 const GamePage = () => {
   const container = {
@@ -28,6 +29,8 @@ const GamePage = () => {
         </div>
         <Button />
       </div>
+          
+          <QuoteButton />
     </>
   );
 };
