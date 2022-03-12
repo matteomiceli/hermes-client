@@ -15,7 +15,7 @@ function QuoteButton({
     paddingLeft: 30,
     paddingRight: 30,
     margin: "8px 0",
-    width: 600,
+    width: "70%",
     color: "white",
     fontSize: 18,
     fontWeight: "bold",
@@ -30,7 +30,7 @@ function QuoteButton({
   };
   return (
     <>
-      <div style={button}>
+      <div style={button} onClick={() => handleFinalAnswer(quote)}>
         <span style={span}>{quote}</span>
       </div>
     </>

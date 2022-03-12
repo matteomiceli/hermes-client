@@ -18,7 +18,7 @@ const StreakCounter = ({ streak, inc }) => {
 
   return (
     <>
-      <div style={boxStyle} onClick={inc}>
+      <div style={boxStyle}>
         <p style={xStyle}>Streak</p>
         <p style={xStyle}>{streak}</p>
       </div>
