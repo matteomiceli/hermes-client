@@ -1,10 +1,28 @@
 import React from "react";
 import CheckMark from "../assets/CheckMark";
+import { AnimatePresence, motion, useAnimation } from "framer-motion";
+import XMark from "../assets/XMark";
 
 function QuoteButton({
   quote = "Good vibes come from good people",
   handleFinalAnswer,
+  answer = "",
 }) {
+  const controls = useAnimation()
+  const startAnim = () => {
+    controls.start(i => ({
+      opacity: [0,1,0,1,0,1],
+      transition: { delay: i * 0.3 },
+    }))
+  }
+  // const stopAnim = () => controls.stop()
+  
+  const [pressed, setPressed] = React.useState(false)
+  const quotePress = (quote) => {
+    startAnim()
+    handleFinalAnswer(quote)
+    setPressed(true)
+  }
   const button = {
     display: "flex",
     justifyContent: "flex-start",
@@ -21,18 +39,33 @@ function QuoteButton({
     fontWeight: "bold",
     cursor: "pointer",
     borderRadius: 15,
+    border: pressed?'1px solid rgba(255, 0, 0, 0.4)':''
   };
   const span = {
     flexGrow: 5,
   };
-  const div = {
-    flexGrow: 1,
-  };
+  const hidden = {translateX: '100vw'}
+  // const visible = {display: 'block', visibility: 'visible', scale: 1, translateX: '0', opacity: 1}
   return (
     <>
-      <div style={button} onClick={() => handleFinalAnswer(quote)}>
-        <span style={span}>{quote}</span>
-      </div>
+      <AnimatePresence exitBeforeEnter initial={false}>
+        {!pressed && (
+          <motion.div
+            whileTap={{ scale: 0.95 }}
+            exit={hidden}
+            transition={{ delay: 1 }}
+            style={button}
+            onClick={() => quotePress(quote)}
+          >
+            <span style={span}>{quote}</span>
+            {quote === answer ? (
+              <CheckMark animate={controls} />
+            ) : (
+              <XMark animate={controls} />
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

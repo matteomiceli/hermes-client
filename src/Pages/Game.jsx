@@ -4,6 +4,7 @@ import StreakCounter from "../components/StreakCounter";
 import QuoteButton from "../components/QuoteButton";
 import QuoteDisplay from "../components/QuoteDisplay";
 import { useState, useEffect } from "react";
+import useStreakHook from "../Hooks/useStreakHook";
 
 const GamePage = () => {
   const [strikes, setStrikes] = useState(0);
@@ -26,7 +27,7 @@ const GamePage = () => {
   }, [gameData]);
 
   useEffect(() => {
-    if (strikes === 4) {
+    if (strikes === 3) {
       setTimeout(() => {
         setGameState(null);
       }, 2000);
@@ -34,7 +35,7 @@ const GamePage = () => {
       newGame();
     }
   }, [strikes]);
-
+  const [streakTab, setStreakTab] = useStreakHook(); // by using hook we extract state
   useEffect(() => {
     if (gameState === "congrats") {
       setGameData(null);
@@ -42,6 +43,7 @@ const GamePage = () => {
   }, [streak, gameState]);
 
   function newGame() {
+    setStreakTab(0);
     setStreak(0);
     setStrikes(0);
     setGameData(null);
@@ -55,8 +57,9 @@ const GamePage = () => {
       incrementStrikes();
     }
   }
-
+  
   function incrementStreak() {
+    setStreakTab(streak)
     setStreak(streak + 1);
   }
   function incrementStrikes() {
@@ -95,7 +98,12 @@ const GamePage = () => {
   return (
     <>
       <div style={container}>
-        <StreakCounter streak={streak} inc={incrementStreak} />
+        <StreakCounter
+          streak={streak}
+          streakTab={streakTab}
+          setStreakTab={setStreakTab}
+          inc={incrementStreak}
+        />
         <div style={strikeContainer}>
           <BoxStrike strikes={strikes} />
         </div>
@@ -122,6 +130,7 @@ const GamePage = () => {
             <div style={quotesContainer}>
               <QuoteButton
                 quote={quote}
+                answer={gameData.answer}
                 handleFinalAnswer={handleFinalAnswer}
                 key={quote}
               />
