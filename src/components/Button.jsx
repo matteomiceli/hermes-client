@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const buttonStyle = {
   background: "linear-gradient(180deg, #8241F9 0%, #4E277B 100%)",
@@ -13,14 +14,15 @@ const buttonStyle = {
 };
 
 const Button = ({ newGame }) => (
-  <button
+  <motion.button
+    whileTap={{scale: 0.94}}
     type="button"
     className="btn btn-default"
     style={buttonStyle}
     onClick={() => newGame()}
   >
     New Game
-  </button>
+  </motion.button>
 );
 
 export default Button;
